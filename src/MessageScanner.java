@@ -18,5 +18,4 @@ public class MessageScanner {
 
         return ACCENTS.matcher(text).replaceAll("");
     }
-
 }

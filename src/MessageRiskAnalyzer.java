@@ -35,8 +35,10 @@ public class MessageRiskAnalyzer {
 
     public ScoreCalculator processRisk(String message) {
         ScoreCalculator scoreCalculator = new ScoreCalculator();
+        MessageScanner messageScanner = new MessageScanner();
+        message = messageScanner.normalize(message);
 
-        String[] words = message.toUpperCase().split("\\W+");
+        String[] words = message.split("\\W+");
 
         for (String w : words){
             if (w.isEmpty()) continue;
