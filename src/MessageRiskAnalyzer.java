@@ -2,7 +2,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.Normalizer;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MessageRiskAnalyzer {
@@ -11,8 +13,8 @@ public class MessageRiskAnalyzer {
     private Map<String, String> keywordMap;
 
     public MessageRiskAnalyzer() {
-        loadCsv();
         keywordMap = new HashMap<>();
+        loadCsv();
     }
 
     private void loadCsv() {
@@ -34,13 +36,17 @@ public class MessageRiskAnalyzer {
     public ScoreCalculator processRisk(String message) {
         ScoreCalculator scoreCalculator = new ScoreCalculator();
 
-        message = message.toUpperCase();
-        
-        // usa um foreach para cada elemento da keywordMap salva em keyword/category
-        // verifica
+        String[] words = message.toUpperCase().split("\\W+");
 
-        //scoreCalculator.addScore(category);
-        
-        return null;
+        for (String w : words){
+            if (w.isEmpty()) continue;
+
+            if (keywordMap.containsKey(w)){
+                String category = keywordMap.get(w);
+
+                scoreCalculator.addScore(category);
+            }
+        }
+        return scoreCalculator;
     }
 }

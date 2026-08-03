@@ -13,8 +13,8 @@ public class Main {
 
         ScoreCalculator result = messageRiskAnalyzer.processRisk(message);
 
-        System.out.println("Pontuação Total de Risco: " + result.getScore());
-        result.scoreResult();
+        System.out.println("\nPontuação Total de Risco: " + result.getScore());
+        System.out.println(result.scoreResult());
 
         sc.close();
     }
