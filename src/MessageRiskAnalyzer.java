@@ -11,9 +11,11 @@ public class MessageRiskAnalyzer {
 
     private static final String CSV_PATH = "src/suspiciousKeywords.csv";
     private Map<String, String> keywordMap;
+    private LinkChecker linkChecker;
 
     public MessageRiskAnalyzer() {
         keywordMap = new HashMap<>();
+        linkChecker = new LinkChecker();
         loadCsv();
     }
 
@@ -40,15 +42,20 @@ public class MessageRiskAnalyzer {
 
         String[] words = message.split("\\W+");
 
-        for (String w : words){
+        for (String w : words) {
             if (w.isEmpty()) continue;
 
-            if (keywordMap.containsKey(w)){
+            if (keywordMap.containsKey(w)) {
                 String category = keywordMap.get(w);
 
                 scoreCalculator.addScore(category);
             }
         }
+
+        if (linkChecker.hasSuspiciousLink(message) && linkChecker.contemRisco(message)) {
+            scoreCalculator.addScore("SUSPICIOUS_LINK");
+        }
         return scoreCalculator;
     }
 }
+
