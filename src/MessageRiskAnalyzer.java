@@ -1,10 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.Normalizer;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MessageRiskAnalyzer {
@@ -52,7 +49,7 @@ public class MessageRiskAnalyzer {
             }
         }
 
-        if (linkChecker.hasSuspiciousLink(message) && linkChecker.contemRisco(message)) {
+        if (linkChecker.hasSuspiciousLink(message) && linkChecker.hasRink(message)) {
             scoreCalculator.addScore("SUSPICIOUS_LINK");
         }
         return scoreCalculator;

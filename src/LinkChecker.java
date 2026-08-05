@@ -20,26 +20,25 @@ import java.util.regex.Pattern;
             return matcher.find();
         }
 
-        public static boolean contemRisco(String urlString) {
+        public static boolean hasRink(String urlString) {
             try {
                 URI uri = new URL(urlString).toURI();
                 String scheme = uri.getScheme();
                 String host = uri.getHost();
                 String authority = uri.getAuthority();
 
-                if (host == null) return true; // Se não tem host, é inválida/suspeita
+                if (host == null) return true;
 
-                // Regras de Risco
-                if (!"https".equalsIgnoreCase(scheme)) return true; // HTTP inseguro
-                if (IP_PATTERN.matcher(host).matches()) return true; // IP direto
-                if (IDN.toASCII(host).startsWith("xn--")) return true; // Homógrafo
-                if (authority != null && authority.contains("@")) return true; // Ofuscação com @
-                if (host.chars().filter(ch -> ch == '.').count() > 4) return true; // Muitos subdomínios
+                if (!"https".equalsIgnoreCase(scheme)) return true;
+                if (IP_PATTERN.matcher(host).matches()) return true;
+                if (IDN.toASCII(host).startsWith("xn--")) return true;
+                if (authority != null && authority.contains("@")) return true;
+                if (host.chars().filter(ch -> ch == '.').count() > 4) return true;
 
                 return false;
 
             } catch (Exception e) {
-                return true; // Risco encontrado
+                return true;
             }
         }
     }
