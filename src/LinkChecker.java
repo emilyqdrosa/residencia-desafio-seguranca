@@ -34,9 +34,7 @@ import java.util.regex.Pattern;
                 if (IP_PATTERN.matcher(host).matches()) return true; // IP direto
                 if (IDN.toASCII(host).startsWith("xn--")) return true; // Homógrafo
                 if (authority != null && authority.contains("@")) return true; // Ofuscação com @
-                if (host.chars().filter(ch -> ch == '.').count() > 4) return true; // Muitos subdomínios
-
-                return false;
+                return host.chars().filter(ch -> ch == '.').count() > 4; // Muitos subdomínios
 
             } catch (Exception e) {
                 return true; // Risco encontrado
